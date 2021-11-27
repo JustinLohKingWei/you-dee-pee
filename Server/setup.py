@@ -1,10 +1,10 @@
 from setuptools import setup
 setup(
-    name = 'httpfs',
+    name = 'udp_httpfs',
     version = '0.1.0',
-    packages = ['httpfs'],
+    packages = ['udp_httpfs'],
     entry_points = {
         'console_scripts': [
-            'httpfs = httpfs.__main__:main'
+            'udp_httpfs = udp_httpfs.__main__:main'
         ]
     })

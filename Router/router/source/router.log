@@ -1,0 +1,8 @@
+13:51:18.931531 config: drop-rate=0.00, max-delay=0s, seed=1638039078931332406
+13:51:18.931993 router is listening at :3000
+13:52:58.627134 config: drop-rate=0.00, max-delay=0s, seed=1638039178626863944
+13:52:58.628048 failed to listen on port listen udp :3000: bind: address already in use
+13:54:04.535057 config: drop-rate=0.00, max-delay=0s, seed=1638039244534985843
+13:54:04.535331 failed to listen on port listen udp :3000: bind: address already in use
+13:56:50.159496 config: drop-rate=0.00, max-delay=0s, seed=1638039410159426371
+13:56:50.159756 router is listening at :3001

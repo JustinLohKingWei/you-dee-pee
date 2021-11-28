@@ -1,0 +1,14 @@
+{
+  "name": "udp_httpc",
+  "version": "1.0.0",
+  "description": "An alternate version of the previous httpc package which uses udp protocols instead of tcp",
+  "main": "udp_httpc.js",
+  "bin": {
+    "udp_httpc": "./udp_httpc.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Justin Loh",
+  "license": "ISC"
+}

@@ -10,3 +10,7 @@
 00:41:52.738194 router is listening at :3001
 00:46:43.964965 config: drop-rate=0.00, max-delay=0s, seed=1638164803964914545
 00:46:43.965189 router is listening at :3001
+12:34:27.498631 config: drop-rate=0.00, max-delay=0s, seed=1638207267498535581
+12:34:27.499570 router is listening at :3001
+12:34:37.803147 [queue=0] packet #1, 127.0.0.1:54586 -> 192.168.2.3:8007, sz=4 is delivered
+12:40:13.752583 invalid packet: packet is too short: 9 bytes

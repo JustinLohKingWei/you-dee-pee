@@ -47,7 +47,11 @@ export function toPacket(type, sequenceNo, addressNo, portNo, str) {
     bytes = bytes.concat([code]);
   }
 
-  return bytes;
-}
+  // put into typed array to be sent
+  var byteArr = new Uint8Array(bytes.length)
+  for (var i =0 ; i<bytes.length;++i){
+    byteArr[i]=bytes[i]
+  }
 
-console.log(toPacket('data','1','192.168.2.3','8007',"Hi S"));
+  return byteArr;
+}

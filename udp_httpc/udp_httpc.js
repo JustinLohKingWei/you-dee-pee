@@ -49,7 +49,7 @@ yargs.command(
     });
 
     //sending msg
-    client.send(data, 3001, "localhost", function (error) {
+    client.send(Buffer.from("Hi Server"), 3001, "localhost", function (error) {
       if (error) {
         client.close();
       } else {
@@ -67,7 +67,7 @@ yargs
     function handler(argv) {
       // extract this to const for readibilty
       const myUrl = url.parse(argv.url);
-      const client = net.connect(80, myUrl.host, function () {
+      const client = net.connect(3001, myUrl.host, function () {
         client.write(
           `GET /get?${myUrl.query} HTTP/1.1\n` + `Host: ${myUrl.host}\n\n`
         );

@@ -43,7 +43,6 @@ export function toPacket(type, sequenceNo, addressNo, portNo, str) {
   // define payload bytes of packet
   for (var i = 0; i < str.length; ++i) {
     var code = str.charCodeAt(i);
-
     bytes = bytes.concat([code]);
   }
 

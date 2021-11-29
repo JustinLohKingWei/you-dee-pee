@@ -1,6 +1,6 @@
 
 import socket
-from .byteParsing import parseBytes
+from .packetActions import parsePacket, toPacket
 
 def udp_Server(portInput,directoryInput):
     IP = "127.0.0.1"
@@ -9,12 +9,13 @@ def udp_Server(portInput,directoryInput):
     UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     UDPServerSocket.bind((IP,portInput))
 
-    print(f"server starting at port {portInput} , using directory {directoryInput}")
+    print(f"server starting and listening at port {portInput} , using directory {directoryInput}")
 
     while(True):
         bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
 
-        bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
+        # bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
+        print(bytesAddressPair)
 
         message = bytesAddressPair[0]
 
@@ -26,10 +27,10 @@ def udp_Server(portInput,directoryInput):
         print(clientMsg)
         print(clientIP)
 
-        for x in range(15):
-            translatedMessage = message[x]
-            print(translatedMessage)
+        parsePacket(message,address)
 
-        parseBytes(message,address)
+        bytesToSend = toPacket('data',"1",'127.0.0.1',3001,"Hi")
+
+        UDPServerSocket.sendto(bytesToSend, address)
 
         

@@ -112,6 +112,10 @@ def handle_Request(connInput, addrInput ,directoryInput):
     conn.close()
     print('Connection closed')
 
+def handleUDP():
+        pass
+
+
 
 def start(serverInput, serveraddr ,directoryInput):
     server = serverInput

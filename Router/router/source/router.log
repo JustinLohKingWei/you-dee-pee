@@ -14,3 +14,53 @@
 12:34:27.499570 router is listening at :3001
 12:34:37.803147 [queue=0] packet #1, 127.0.0.1:54586 -> 192.168.2.3:8007, sz=4 is delivered
 12:40:13.752583 invalid packet: packet is too short: 9 bytes
+12:53:30.145911 config: drop-rate=0.00, max-delay=0s, seed=1638208410145635561
+12:53:30.148623 router is listening at :3001
+12:53:52.674711 invalid packet: packet is too short: 9 bytes
+12:54:43.158622 [queue=0] packet #1, 127.0.0.1:35489 -> 127.0.0.1:8080, sz=4 is delivered
+13:26:45.124879 [queue=0] packet #1, 127.0.0.1:42201 -> 127.0.0.1:8080, sz=4 is delivered
+13:28:03.320387 [queue=0] packet #1, 127.0.0.1:47782 -> 127.0.0.1:8080, sz=4 is delivered
+13:33:31.205970 [queue=0] packet #1, 127.0.0.1:48146 -> 127.0.0.1:8080, sz=4 is delivered
+14:00:12.228193 [queue=0] packet #1, 127.0.0.1:42586 -> 127.0.0.1:8080, sz=54 is delivered
+14:00:49.290899 [queue=0] packet #1, 127.0.0.1:36815 -> 127.0.0.1:8080, sz=54 is delivered
+14:01:29.179945 [queue=0] packet #1, 127.0.0.1:47226 -> 127.0.0.1:8080, sz=4 is delivered
+14:06:29.569774 [queue=0] packet #1, 127.0.0.1:44532 -> 127.0.0.1:8080, sz=4 is delivered
+14:06:48.802096 [queue=0] packet #1, 127.0.0.1:40915 -> 127.0.0.1:8080, sz=4 is delivered
+14:07:36.190805 [queue=0] packet #1, 127.0.0.1:40887 -> 127.0.0.1:8080, sz=4 is delivered
+14:07:47.677747 [queue=0] packet #1, 127.0.0.1:34773 -> 127.0.0.1:8080, sz=4 is delivered
+14:07:52.276850 [queue=0] packet #1, 127.0.0.1:52783 -> 127.0.0.1:8080, sz=4 is delivered
+14:08:12.224075 [queue=0] packet #1, 127.0.0.1:56696 -> 127.0.0.1:8080, sz=4 is delivered
+14:08:15.530084 [queue=0] packet #1, 127.0.0.1:41450 -> 127.0.0.1:8080, sz=4 is delivered
+14:09:31.762475 [queue=0] packet #1, 127.0.0.1:54122 -> 127.0.0.1:8080, sz=4 is delivered
+14:09:37.081069 [queue=0] packet #1, 127.0.0.1:53064 -> 127.0.0.1:8080, sz=4 is delivered
+14:18:47.253017 [queue=0] packet #1, 127.0.0.1:35968 -> 127.0.0.1:8080, sz=4 is delivered
+14:18:55.485862 [queue=0] packet #1, 127.0.0.1:45729 -> 127.0.0.1:8080, sz=4 is delivered
+14:22:34.382570 [queue=0] packet #1, 127.0.0.1:58750 -> 127.0.0.1:8080, sz=4 is delivered
+14:22:38.806691 [queue=0] packet #1, 127.0.0.1:57556 -> 127.0.0.1:8080, sz=4 is delivered
+14:23:39.711003 [queue=0] packet #1, 127.0.0.1:41872 -> 127.0.0.1:8080, sz=4 is delivered
+14:23:42.637137 [queue=0] packet #1, 127.0.0.1:41168 -> 127.0.0.1:8080, sz=4 is delivered
+14:37:24.519010 config: drop-rate=0.00, max-delay=0s, seed=1638214644518928517
+14:37:24.519327 router is listening at :3001
+14:40:59.886832 [queue=0] packet #1, 127.0.0.1:45986 -> 127.0.0.1:8080, sz=4 is delivered
+14:41:07.120321 [queue=0] packet #1, 127.0.0.1:58962 -> 127.0.0.1:8080, sz=4 is delivered
+15:19:23.297006 [queue=0] packet #1, 127.0.0.1:49749 -> 127.0.0.1:8080, sz=4 is delivered
+15:19:36.096178 [queue=0] packet #1, 127.0.0.1:60499 -> 127.0.0.1:8080, sz=4 is delivered
+15:19:42.622422 [queue=0] packet #1, 127.0.0.1:43689 -> 127.0.0.1:8080, sz=4 is delivered
+15:23:42.165260 [queue=0] packet #1, 127.0.0.1:41963 -> 127.0.0.1:8080, sz=4 is delivered
+15:23:45.530972 [queue=0] packet #1, 127.0.0.1:42733 -> 127.0.0.1:8080, sz=4 is delivered
+15:29:57.085321 [queue=0] packet #1, 127.0.0.1:33824 -> 127.0.0.1:8080, sz=4 is delivered
+15:30:03.007327 [queue=0] packet #1, 127.0.0.1:48184 -> 127.0.0.1:8080, sz=4 is delivered
+15:30:57.530499 [queue=0] packet #1, 127.0.0.1:40639 -> 127.0.0.1:8080, sz=4 is delivered
+15:31:00.714973 [queue=0] packet #1, 127.0.0.1:45807 -> 127.0.0.1:8080, sz=4 is delivered
+15:32:13.345065 [queue=0] packet #1, 127.0.0.1:35862 -> 127.0.0.1:8080, sz=4 is delivered
+15:32:17.689046 [queue=0] packet #1, 127.0.0.1:58629 -> 127.0.0.1:8080, sz=4 is delivered
+15:36:09.502480 [queue=0] packet #1, 127.0.0.1:46370 -> 127.0.0.1:8080, sz=4 is delivered
+15:36:11.960565 [queue=0] packet #1, 127.0.0.1:33216 -> 127.0.0.1:8080, sz=4 is delivered
+15:37:04.113919 [queue=0] packet #1, 127.0.0.1:58888 -> 127.0.0.1:8080, sz=4 is delivered
+15:37:08.255746 [queue=0] packet #1, 127.0.0.1:37897 -> 127.0.0.1:8080, sz=4 is delivered
+15:38:55.132144 [queue=0] packet #1, 127.0.0.1:36869 -> 127.0.0.1:8080, sz=4 is delivered
+15:38:58.025452 [queue=0] packet #1, 127.0.0.1:36226 -> 127.0.0.1:8080, sz=4 is delivered
+15:44:43.019708 [queue=0] packet #1, 127.0.0.1:34709 -> 127.0.0.1:8080, sz=11 is delivered
+15:44:44.889259 [queue=0] packet #1, 127.0.0.1:44121 -> 127.0.0.1:8080, sz=11 is delivered
+15:47:18.212024 [queue=0] packet #1, 127.0.0.1:50110 -> 127.0.0.1:8080, sz=32 is delivered
+15:47:24.878514 [queue=0] packet #1, 127.0.0.1:40114 -> 127.0.0.1:8080, sz=32 is delivered

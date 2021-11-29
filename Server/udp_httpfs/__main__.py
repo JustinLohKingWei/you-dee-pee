@@ -1,6 +1,6 @@
 import argparse
 from .printDebug import printDebug
-from .server import server
+from .udp_Server import udp_Server
 
 def main():
     parser=argparse.ArgumentParser(description='udp_httpfs is a simple file server')
@@ -10,7 +10,7 @@ def main():
     args = parser.parse_args()
     if args.v:
         printDebug()
-    server(args.p,args.d)
+    udp_Server(args.p,args.d)
 
 
 if __name__ == '__main__':

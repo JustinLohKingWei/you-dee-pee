@@ -35,7 +35,7 @@ yargs.command(
     var client = udp.createSocket("udp4");
 
     //buffer msg
-    var data = toPacket('data','1','192.168.2.3','8007',"Hi S")
+    var data = toPacket('data','1','127.0.0.1','8080',"GET foo.txt and your mama's nuts")
     console.log(data)
 
     client.on("message", function (msg, info) {
@@ -49,7 +49,7 @@ yargs.command(
     });
 
     //sending msg
-    client.send(Buffer.from("Hi Server"), 3001, "localhost", function (error) {
+    client.send(data, 3001, "localhost", function (error) {
       if (error) {
         client.close();
       } else {

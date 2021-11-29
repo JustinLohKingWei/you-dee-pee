@@ -1,6 +1,7 @@
 {
   "name": "udp_httpc",
   "version": "1.0.0",
+  "type": "module",
   "description": "An alternate version of the previous httpc package which uses udp protocols instead of tcp",
   "main": "udp_httpc.js",
   "bin": {

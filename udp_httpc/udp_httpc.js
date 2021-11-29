@@ -2,11 +2,18 @@
 
 "use strict";
 
+import { toPacket } from "./byteBuffer.js";
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url);
+
 const net = require("net");
 
 const yargs = require("yargs");
 
 const url = require("url");
+
+//udp stuff
+const udp = require("dgram");
 
 yargs.command(
   "help",
@@ -14,6 +21,41 @@ yargs.command(
   (yargs) => {},
   function handler(argv) {
     console.log("Welcome to Help");
+  }
+);
+// Ping funciton for
+yargs.command(
+  "ping [url]",
+  "Pings a Router",
+  (yargs) => {},
+  function handler(argv) {
+    console.log("Welcome to Ping Function!");
+
+    // creating a client socket
+    var client = udp.createSocket("udp4");
+
+    //buffer msg
+    var data = toPacket('data','1','192.168.2.3','8007',"Hi S")
+    console.log(data)
+
+    client.on("message", function (msg, info) {
+      console.log("Data received from server : " + msg.toString());
+      console.log(
+        "Received %d bytes from %s:%d\n",
+        msg.length,
+        info.address,
+        info.port
+      );
+    });
+
+    //sending msg
+    client.send(data, 3001, "localhost", function (error) {
+      if (error) {
+        client.close();
+      } else {
+        console.log("Data sent !!!");
+      }
+    });
   }
 );
 
@@ -83,7 +125,11 @@ yargs
       console.log(argv.d);
       const client = net.connect(80, myUrl.host, function () {
         client.write(
-          `POST ${myUrl.path} HTTP/1.1\n` + `Host: ${myUrl.host}\n` + `Content-Type: application/json;\n` + `Content-Length: ${argv.d.length}` + `\r\n\r\n${argv.d}\n\n`
+          `POST ${myUrl.path} HTTP/1.1\n` +
+            `Host: ${myUrl.host}\n` +
+            `Content-Type: application/json;\n` +
+            `Content-Length: ${argv.d.length}` +
+            `\r\n\r\n${argv.d}\n\n`
         );
         console.log("Connected to server!");
       });
@@ -143,29 +189,3 @@ yargs
   });
 
 yargs.argv;
-
-//https://thecodebarbarian.com/building-a-cli-tool-with-node-js.html
-//https://blog.bitsrc.io/how-to-build-a-command-line-cli-tool-in-nodejs-b8072b291f81
-//https://alanstorm.com/yargs-and-command-line-argument-processing-in-nodejs/
-//https://nodejs.org/en/knowledge/command-line/how-to-parse-command-line-arguments/
-
-// new Promise((resolve, reject) => {
-//   let buff = Buffer.of();
-//   client.on("data", function (data) {
-//     console.log("Received " + data.length + " bytes\n" + data);
-//     buff = Buffer.concat(buff, data);
-//   });
-//   client.on("end", function () {
-//     console.log("disconnected from server");
-//     //client.end();
-//     resolve(buff.toString());
-//   });
-//   client.on("error", function (e) {
-//     console.log("Connection error");
-//     // client.end();
-//     reject(e);
-//   });
-// })
-//   .then((data) => console.log(`Finished recieving data: ${data}`))
-//   .catch((e) => console.log(`An error occured: ${e}`));
-//`GET /get?${myUrl.query}} HTTP/1.1\n` + `Host: ${myUrl.host}\n\n`

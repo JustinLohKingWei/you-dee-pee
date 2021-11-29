@@ -6,3 +6,7 @@
 13:54:04.535331 failed to listen on port listen udp :3000: bind: address already in use
 13:56:50.159496 config: drop-rate=0.00, max-delay=0s, seed=1638039410159426371
 13:56:50.159756 router is listening at :3001
+00:41:52.731983 config: drop-rate=0.00, max-delay=0s, seed=1638164512731925179
+00:41:52.738194 router is listening at :3001
+00:46:43.964965 config: drop-rate=0.00, max-delay=0s, seed=1638164803964914545
+00:46:43.965189 router is listening at :3001

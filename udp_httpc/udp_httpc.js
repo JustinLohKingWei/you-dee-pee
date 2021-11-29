@@ -38,6 +38,9 @@ yargs.command(
     var data = toPacket('data','1','127.0.0.1','8080',"GET foo.txt and your mama's nuts")
     console.log(data)
 
+    // client socket bind
+    client.bind(5050)
+
     client.on("message", function (msg, info) {
       console.log("Data received from server : " + msg.toString());
       console.log(

@@ -29,7 +29,7 @@ def udp_Server(portInput,directoryInput):
 
         parsePacket(message,address)
 
-        bytesToSend = toPacket('data',"1",'127.0.0.1',3001,"Hi")
+        bytesToSend = toPacket('data',"1",'127.0.0.1',5050,"Hi")
 
         UDPServerSocket.sendto(bytesToSend, address)
 

@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { toPacket } from "./byteBuffer.js";
+import { toPacket , parsePacket } from "./byteBuffer.js";
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url);
 
@@ -35,7 +35,7 @@ yargs.command(
     var client = udp.createSocket("udp4");
 
     //buffer msg
-    var data = toPacket('data','1','127.0.0.1','8080',"GET foo.txt and your mama's nuts")
+    var data = toPacket('data','1','127.0.0.1','8080',"GET foo.txt")
     console.log(data)
 
     // client socket bind
@@ -49,6 +49,8 @@ yargs.command(
         info.address,
         info.port
       );
+      parsePacket(msg,info)
+
     });
 
     //sending msg

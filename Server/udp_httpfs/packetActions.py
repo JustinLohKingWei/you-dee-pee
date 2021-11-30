@@ -36,12 +36,12 @@ def parsePacket(bytesInput, addressInput):
     payLoad = ''.join(chr(i) for i in payLoadArr)
 
     # Print Contents of Packet
-    # print("==========PACKET CONTENTS===========")
-    # print(f"Data type is {packetType}")
-    # print(f"Sequence Number is {sequenceNo}")
-    # print(f"Client IP is {clientIP}")
-    # print(f"Client Port is {clientPort}")
-    # print(f"Payload is {payLoad}")
+    print("==========PACKET CONTENTS===========")
+    print(f"Data type is {packetType}")
+    print(f"Sequence Number is {sequenceNo}")
+    print(f"Client IP is {clientIP}")
+    print(f"Client Port is {clientPort}")
+    print(f"Payload is {payLoad}")
 
 
 # function to construct outgoing packets
@@ -77,13 +77,6 @@ def toPacket(type, sequenceNo, addressNo, portNo, stringInput):
     for x in range(len(stringInput)):
         bytes.append(ord(stringInput[x]))
 
-    print(bytes)
-
     bytesArr = bytearray(bytes)
 
-    # for x in range(len(bytes)):
-    #     bytesArr.append(bytes[x].encode('utf8'))
-
     return bytesArr
-    
-# toPacket('data',"1",'127.0.0.1',52248,"Hi")

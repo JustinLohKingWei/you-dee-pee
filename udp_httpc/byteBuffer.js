@@ -54,3 +54,61 @@ export function toPacket(type, sequenceNo, addressNo, portNo, str) {
 
   return byteArr;
 }
+
+// Function to parse incoming packets
+export function parsePacket(bytesInput,addressInput) {
+  // for (var i =0 ; i<bytesInput.length;++i){
+  //   console.log(bytesInput[i])
+  // }
+
+
+  const ip = addressInput.address
+  const port = addressInput.port
+  
+  var packetType = ""
+
+  switch (bytesInput[0]) {
+    case 0:
+    packetType ="data"
+      break;
+    case 1:
+    packetType ="ACK"
+      break;
+    case 2:
+    packetType ="SYN"
+      break;
+    case 3:
+    packetType ="SYN-ACK"
+      break;
+  }
+
+
+  // Determine Sequnce Number Of Incoming Packet
+  const sqBit3 = bytesInput[1]*1000
+  const sqBit2 = bytesInput[2]*100
+  const sqBit1 = bytesInput[3]*10
+  const sqBit0 = bytesInput[4]*1
+
+  const sequenceNo = sqBit0 + sqBit1 + sqBit2 + sqBit3
+
+  // Determine Payload
+  const payLoadByteStart = 11
+  var payLoadArr = []
+  for (var i =payLoadByteStart ; i<bytesInput.length;++i){
+          payLoadArr.push(String.fromCharCode(bytesInput[i]))
+  }
+  const payLoad = payLoadArr.join("")
+
+  // Print data of recieved Packet
+  console.log(`Packet type is ${packetType}`)
+  console.log(`Sequence Number is ${sequenceNo}`)
+  console.log(`Address is ${ip}`)
+  console.log(`Port is ${port}`)
+  console.log(`Payload is ${payLoad}`)
+
+
+
+
+
+  
+}

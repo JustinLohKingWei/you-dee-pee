@@ -2,8 +2,8 @@
 
 "use strict";
 
-import { toPacket , parsePacket } from "./byteBuffer.js";
-import { createRequire } from 'module'
+import { toPacket, parsePacket } from "./byteBuffer.js";
+import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 const net = require("net");
@@ -23,10 +23,10 @@ yargs.command(
     console.log("Welcome to Help");
   }
 );
-// Ping funciton for
+// Ping function for
 yargs.command(
   "ping [url]",
-  "Pings a Router",
+  "Pings a Server across a Route",
   (yargs) => {},
   function handler(argv) {
     console.log("Welcome to Ping Function!");
@@ -35,12 +35,13 @@ yargs.command(
     var client = udp.createSocket("udp4");
 
     //buffer msg
-    var data = toPacket('data','1','127.0.0.1','8080',"GET foo.txt")
-    console.log(data)
+    var data = toPacket("SYN", "1", "127.0.0.1", "8080", "Hi S");
+    console.log(data);
 
     // client socket bind
-    client.bind(5050)
+    client.bind(5050);
 
+    // client receiving messages
     client.on("message", function (msg, info) {
       console.log("Data received from server : " + msg.toString());
       console.log(
@@ -49,8 +50,7 @@ yargs.command(
         info.address,
         info.port
       );
-      parsePacket(msg,info)
-
+      parsePacket(msg, info);
     });
 
     //sending msg
@@ -61,6 +61,100 @@ yargs.command(
         console.log("Data sent !!!");
       }
     });
+  }
+);
+
+// GET UPD function for
+yargs.command(
+  "udp_Get [url]",
+  "Pings a Server across a Route",
+  (yargs) => {},
+  function handler(argv) {
+    console.log("Welcome to GET Function!");
+
+    // creating a client socket
+    var client = udp.createSocket("udp4");
+    // client socket bind
+    client.bind(5050);
+
+    //'http://127.0.0.1:8080//get?foo.txt'
+    // COMMAND : udp_httpc udp_Get 'http://127.0.0.1:8080//get?foo.txt'
+    // creating the http request
+    const myUrl = url.parse(argv.url);
+    const requestToSend =
+      `GET /get?${myUrl.query} HTTP/1.1\n` + `Host: ${myUrl.hostname}\n\n`;
+    console.log(requestToSend);
+
+    //buffer msg
+    // var data = toPacket("data", "1", myUrl.hostname, myUrl.port, requestToSend);
+    // console.log(data);
+
+    // MAKING HANDSHAKE PACKET TO SEND
+    var p1 = toPacket("SYN", "1", "127.0.0.1", "8080", "Hi S");
+    var p3 = toPacket(
+      "ACK",
+      "3",
+      "127.0.0.1",
+      "8080",
+      "CONNECTION ESTABLISHED"
+    );
+
+    var handShakeComplete = false;
+
+    if (!handShakeComplete) {
+
+      // set timout for first message
+      setInterval(() => {
+      client.send(p1, 3001, "localhost", function (error) {
+        if (error) {
+          client.close();
+        } else {
+          console.log("Data sent !!!");
+        }
+      });
+    }, 5000);
+
+      client.on("message", function (msg, info) {
+        console.log("Data received from server : " + msg.toString());
+        console.log(
+          "Received %d bytes from %s:%d\n",
+          msg.length,
+          info.address,
+          info.port
+        );
+        var response = parsePacket(msg, info);
+        if (response.packetType == "SYN-ACK") {
+          console.log("RECEIVED SYN-ACK");
+          client.send(p3, 3001, "localhost", function (error) {
+            if (error) {
+              client.close();
+            } else {
+              console.log("Data sent !!!");
+            }
+          });
+          handShakeComplete = true;
+        }
+      });
+    }
+
+    // client.on("message", function (msg, info) {
+    //   console.log("Data received from server : " + msg.toString());
+    //   console.log(
+    //     "Received %d bytes from %s:%d\n",
+    //     msg.length,
+    //     info.address,
+    //     info.port
+    //   );
+    // });
+
+    //sending msg
+    // client.send(data, 3001, "localhost", function (error) {
+    //   if (error) {
+    //     client.close();
+    //   } else {
+    //     console.log("Data sent !!!");
+    //   }
+    // });
   }
 );
 

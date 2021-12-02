@@ -14,7 +14,6 @@ def udp_Server(portInput,directoryInput):
     while(True):
         bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
 
-        # bytesAddressPair = UDPServerSocket.recvfrom(bufferSize)
         print(bytesAddressPair)
 
         message = bytesAddressPair[0]
@@ -27,10 +26,16 @@ def udp_Server(portInput,directoryInput):
         print(clientMsg)
         print(clientIP)
 
-        parsePacket(message,address)
+        resultingPacket = parsePacket(message,address)
+        p2 = toPacket('SYN-ACK',"1",'127.0.0.1',5050,"Hi")
 
-        bytesToSend = toPacket('data',"1",'127.0.0.1',5050,"Hi")
+        if(resultingPacket.packetType=="SYN") :
+            print('sending a response to SYN')
+            UDPServerSocket.sendto(p2, address)
 
-        UDPServerSocket.sendto(bytesToSend, address)
+        # bytesToSend = toPacket('data',"1",'127.0.0.1',5050,"Hi")
+      
+
+        # UDPServerSocket.sendto(bytesToSend, address)
 
         

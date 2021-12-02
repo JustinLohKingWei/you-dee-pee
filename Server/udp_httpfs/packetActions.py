@@ -1,5 +1,21 @@
 import math
 
+from .requestActions import checkPayload
+
+class udp_Packet:
+    packetType=""
+    sequenceNo=""
+    clientIP=""
+    clientPort=""
+    payLoad=""
+    def __init__(self,packetType,sequenceNo,clientIP,clientPort,payLoad):
+        self.packetType=packetType
+        self.sequenceNo=sequenceNo
+        self.clientIP=clientIP
+        self.clientPort=clientPort
+        self.payLoad=payLoad
+        
+
 # Function to Parse incoming packets
 def parsePacket(bytesInput, addressInput):
 
@@ -42,6 +58,8 @@ def parsePacket(bytesInput, addressInput):
     print(f"Client IP is {clientIP}")
     print(f"Client Port is {clientPort}")
     print(f"Payload is {payLoad}")
+    resultingPacket = udp_Packet(packetType,sequenceNo,clientIP,clientPort,payLoad)
+    return resultingPacket
 
 
 # function to construct outgoing packets
@@ -51,11 +69,11 @@ def toPacket(type, sequenceNo, addressNo, portNo, stringInput):
     if type == "data":
         bytes.append(0)
     elif type == "ACK":
-        bytes.append(0)
+        bytes.append(1)
     elif type == "SYN":
-        bytes.append(0)
+        bytes.append(2)
     elif type == "SYN-ACK":
-        bytes.append(0)
+        bytes.append(3)
 
     # define sequence bytes of packet
     sequenceNoStr = str(sequenceNo.zfill(4))

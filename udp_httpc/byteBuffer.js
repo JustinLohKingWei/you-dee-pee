@@ -107,8 +107,8 @@ export function parsePacket(bytesInput,addressInput) {
   console.log(`Payload is ${payLoad}`)
 
 
+  var packet  = {packetType:packetType, sequenceNo:sequenceNo, ip:ip, port:port, payLoad:payLoad};
 
-
-
+  return packet
   
 }

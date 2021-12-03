@@ -27,7 +27,7 @@ def udp_Server(portInput,directoryInput):
         print(clientIP)
 
         resultingPacket = parsePacket(message,address)
-        p2 = toPacket('SYN-ACK',"1",'127.0.0.1',5050,"Hi")
+        p2 = toPacket('SYN-ACK',"2",'127.0.0.1',5050,"Hi")
 
         if(resultingPacket.packetType=="SYN") :
             print('sending a response to SYN')

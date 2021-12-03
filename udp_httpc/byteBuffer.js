@@ -30,7 +30,7 @@ export function toPacket(type, sequenceNo, addressNo, portNo, str) {
   // define address bytes of packet
   const addrArray = addressNo.split(".");
   for (var i = 0; i < addrArray.length; ++i) {
-  var  addr = parseInt(addrArray[i]);
+    var addr = parseInt(addrArray[i]);
     bytes = bytes.concat([addr]);
   }
 
@@ -47,68 +47,125 @@ export function toPacket(type, sequenceNo, addressNo, portNo, str) {
   }
 
   // put into typed array to be sent
-  var byteArr = new Uint8Array(bytes.length)
-  for (var i =0 ; i<bytes.length;++i){
-    byteArr[i]=bytes[i]
+  var byteArr = new Uint8Array(bytes.length);
+  for (var i = 0; i < bytes.length; ++i) {
+    byteArr[i] = bytes[i];
   }
 
   return byteArr;
 }
 
 // Function to parse incoming packets
-export function parsePacket(bytesInput,addressInput) {
+export function parsePacket(bytesInput, addressInput) {
   // for (var i =0 ; i<bytesInput.length;++i){
   //   console.log(bytesInput[i])
   // }
 
+  const ip = addressInput.address;
+  const port = addressInput.port;
 
-  const ip = addressInput.address
-  const port = addressInput.port
-  
-  var packetType = ""
+  var packetType = "";
 
   switch (bytesInput[0]) {
     case 0:
-    packetType ="data"
+      packetType = "data";
       break;
     case 1:
-    packetType ="ACK"
+      packetType = "ACK";
       break;
     case 2:
-    packetType ="SYN"
+      packetType = "SYN";
       break;
     case 3:
-    packetType ="SYN-ACK"
+      packetType = "SYN-ACK";
       break;
   }
 
-
   // Determine Sequnce Number Of Incoming Packet
-  const sqBit3 = bytesInput[1]*1000
-  const sqBit2 = bytesInput[2]*100
-  const sqBit1 = bytesInput[3]*10
-  const sqBit0 = bytesInput[4]*1
+  const sqBit3 = bytesInput[1] * 1000;
+  const sqBit2 = bytesInput[2] * 100;
+  const sqBit1 = bytesInput[3] * 10;
+  const sqBit0 = bytesInput[4] * 1;
 
-  const sequenceNo = sqBit0 + sqBit1 + sqBit2 + sqBit3
+  const sequenceNo = sqBit0 + sqBit1 + sqBit2 + sqBit3;
 
   // Determine Payload
-  const payLoadByteStart = 11
-  var payLoadArr = []
-  for (var i =payLoadByteStart ; i<bytesInput.length;++i){
-          payLoadArr.push(String.fromCharCode(bytesInput[i]))
+  const payLoadByteStart = 11;
+  var payLoadArr = [];
+  for (var i = payLoadByteStart; i < bytesInput.length; ++i) {
+    payLoadArr.push(String.fromCharCode(bytesInput[i]));
   }
-  const payLoad = payLoadArr.join("")
+  const payLoad = payLoadArr.join("");
 
   // Print data of recieved Packet
-  console.log(`Packet type is ${packetType}`)
-  console.log(`Sequence Number is ${sequenceNo}`)
-  console.log(`Address is ${ip}`)
-  console.log(`Port is ${port}`)
-  console.log(`Payload is ${payLoad}`)
+  console.log(`Packet type is ${packetType}`);
+  console.log(`Sequence Number is ${sequenceNo}`);
+  console.log(`Address is ${ip}`);
+  console.log(`Port is ${port}`);
+  console.log(`Payload is ${payLoad}`);
 
+  var packet = {
+    packetType: packetType,
+    sequenceNo: sequenceNo,
+    ip: ip,
+    port: port,
+    payLoad: payLoad,
+  };
 
-  var packet  = {packetType:packetType, sequenceNo:sequenceNo, ip:ip, port:port, payLoad:payLoad};
+  return packet;
+}
 
-  return packet
-  
+//bytesendings
+
+export function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+export async function handshake(client, p1, p3) {
+  var handShakeComplete = false;
+  if (!handShakeComplete) {
+    // set timout for first message
+    client.send(p1, 3001, "localhost", function (error) {
+      if (error) {
+        client.close();
+      } else {
+        console.log("Data sent !!!");
+      }
+    });
+    await sleep(5000);
+
+    client.on("message", function (msg, info) {
+      // console.log("Data received from server : " + msg.toString());
+      // console.log(
+      //   "Received %d bytes from %s:%d\n",
+      //   msg.length,
+      //   info.address,
+      //   info.port
+      // );
+      var response = parsePacket(msg, info);
+      if (response.packetType == "SYN-ACK") {
+        console.log("RECEIVED SYN-ACK");
+        client.send(p3, 3001, "localhost", function (error) {
+          if (error) {
+            client.close();
+          } else {
+            console.log("Data sent !!!");
+          }
+        });
+        handShakeComplete = true;
+      }
+    });
+    while (!handShakeComplete) {
+      client.send(p1, 3001, "localhost", function (error) {
+        if (error) {
+          client.close();
+        } else {
+          console.log("Data sent !!!");
+        }
+      });
+      await sleep(5000);
+    }
+  }
 }

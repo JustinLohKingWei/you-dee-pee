@@ -2,7 +2,7 @@
 
 "use strict";
 
-import { toPacket, parsePacket } from "./byteBuffer.js";
+import { toPacket, parsePacket,handshake } from "./byteBuffer.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
@@ -67,7 +67,7 @@ yargs.command(
 // GET UPD function for
 yargs.command(
   "udp_Get [url]",
-  "Pings a Server across a Route",
+  "Sends a Get request to a server across a Router",
   (yargs) => {},
   function handler(argv) {
     console.log("Welcome to GET Function!");
@@ -90,71 +90,18 @@ yargs.command(
     // console.log(data);
 
     // MAKING HANDSHAKE PACKET TO SEND
-    var p1 = toPacket("SYN", "1", "127.0.0.1", "8080", "Hi S");
+    var p1 = toPacket("SYN",'1', "127.0.0.1", "8080", "Hi S");
     var p3 = toPacket(
       "ACK",
-      "3",
+      '3',
       "127.0.0.1",
       "8080",
       "CONNECTION ESTABLISHED"
     );
 
-    var handShakeComplete = false;
+    handshake(client,p1,p3)
+    console.log("Handshake complete");
 
-    if (!handShakeComplete) {
-
-      // set timout for first message
-      setInterval(() => {
-      client.send(p1, 3001, "localhost", function (error) {
-        if (error) {
-          client.close();
-        } else {
-          console.log("Data sent !!!");
-        }
-      });
-    }, 5000);
-
-      client.on("message", function (msg, info) {
-        console.log("Data received from server : " + msg.toString());
-        console.log(
-          "Received %d bytes from %s:%d\n",
-          msg.length,
-          info.address,
-          info.port
-        );
-        var response = parsePacket(msg, info);
-        if (response.packetType == "SYN-ACK") {
-          console.log("RECEIVED SYN-ACK");
-          client.send(p3, 3001, "localhost", function (error) {
-            if (error) {
-              client.close();
-            } else {
-              console.log("Data sent !!!");
-            }
-          });
-          handShakeComplete = true;
-        }
-      });
-    }
-
-    // client.on("message", function (msg, info) {
-    //   console.log("Data received from server : " + msg.toString());
-    //   console.log(
-    //     "Received %d bytes from %s:%d\n",
-    //     msg.length,
-    //     info.address,
-    //     info.port
-    //   );
-    // });
-
-    //sending msg
-    // client.send(data, 3001, "localhost", function (error) {
-    //   if (error) {
-    //     client.close();
-    //   } else {
-    //     console.log("Data sent !!!");
-    //   }
-    // });
   }
 );
 

@@ -1,5 +1,7 @@
 
 import socket
+
+from .requestActions import handleRequest
 from .packetActions import parsePacket, toPacket
 
 def udp_Server(portInput,directoryInput):
@@ -32,6 +34,9 @@ def udp_Server(portInput,directoryInput):
         if(resultingPacket.packetType=="SYN") :
             print('sending a response to SYN')
             UDPServerSocket.sendto(p2, address)
+
+        if(resultingPacket.packetType=="data"):
+            handleRequest(UDPServerSocket,address,resultingPacket.payLoad,directoryInput)
 
         # bytesToSend = toPacket('data',"1",'127.0.0.1',5050,"Hi")
       

@@ -115,57 +115,48 @@ export function parsePacket(bytesInput, addressInput) {
   return packet;
 }
 
-//bytesendings
+// sendGetRequest
 
-export function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
+export function sendGetRequest(client, myUrl) {
+  console.log("SENDING GET REQUEST")
+  let requestToSend = ""
+  if(myUrl.query!=null){
+  requestToSend =
+    `GET /${myUrl.query} HTTP/1.1\n` + `Host: ${myUrl.hostname}\n\n`;
+  }
+  else{
+    requestToSend =
+    `GET / HTTP/1.1\n` + `Host: ${myUrl.hostname}\n\n`;
+  }
+  console.log(requestToSend);
+  var data = toPacket("data", "1", myUrl.hostname, myUrl.port, requestToSend);
+  client.send(data, 3001, "localhost", function (error) {
+    if (error) {
+      client.close();
+    } else {
+      console.log("Get Request sent !!!");
+    }
   });
 }
 
-export async function handshake(client, p1, p3) {
-  var handShakeComplete = false;
-  if (!handShakeComplete) {
-    // set timout for first message
-    client.send(p1, 3001, "localhost", function (error) {
-      if (error) {
-        client.close();
-      } else {
-        console.log("Data sent !!!");
-      }
-    });
-    await sleep(5000);
+// sendPostRequest
 
-    client.on("message", function (msg, info) {
-      // console.log("Data received from server : " + msg.toString());
-      // console.log(
-      //   "Received %d bytes from %s:%d\n",
-      //   msg.length,
-      //   info.address,
-      //   info.port
-      // );
-      var response = parsePacket(msg, info);
-      if (response.packetType == "SYN-ACK") {
-        console.log("RECEIVED SYN-ACK");
-        client.send(p3, 3001, "localhost", function (error) {
-          if (error) {
-            client.close();
-          } else {
-            console.log("Data sent !!!");
-          }
-        });
-        handShakeComplete = true;
-      }
-    });
-    while (!handShakeComplete) {
-      client.send(p1, 3001, "localhost", function (error) {
-        if (error) {
-          client.close();
-        } else {
-          console.log("Data sent !!!");
-        }
-      });
-      await sleep(5000);
+export function sendPostRequest(client, myUrl) {
+  console.log("SENDING POST REQUEST")
+  let requestToSend = ""
+  requestToSend =
+  `POST ${myUrl.path} HTTP/1.1\n` +
+  `Host: ${myUrl.host}\n` +
+  `Content-Type: application/json;\n` +
+  `Content-Length: ${argv.d.length}` +
+  `\r\n\r\n${argv.d}\n\n`;
+  console.log(requestToSend);
+  var data = toPacket("data", "1", myUrl.hostname, myUrl.port, requestToSend);
+  client.send(data, 3001, "localhost", function (error) {
+    if (error) {
+      client.close();
+    } else {
+      console.log("POST Request sent !!!");
     }
-  }
+  });
 }

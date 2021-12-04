@@ -1,7 +1,4 @@
 import math
-
-from .requestActions import checkPayload
-
 class udp_Packet:
     packetType=""
     sequenceNo=""

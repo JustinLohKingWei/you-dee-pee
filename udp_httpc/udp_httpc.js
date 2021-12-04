@@ -6,6 +6,7 @@ import {
   toPacket,
   parsePacket,
   sendGetRequest,
+  sendPostRequest
 } from "./byteBuffer.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -81,14 +82,8 @@ yargs.command(
     // client socket bind
     client.bind(5050);
 
-    //'http://127.0.0.1:8080//get?foo.txt'
-    // COMMAND : udp_httpc udp_Get 'http://127.0.0.1:8080//get?foo.txt'
     // creating the http request
     const myUrl = url.parse(argv.url);
-
-    //buffer msg
-    // var data = toPacket("data", "1", myUrl.hostname, myUrl.port, requestToSend);
-    // console.log(data);
 
     // MAKING HANDSHAKE PACKET TO SEND
 
@@ -131,6 +126,69 @@ yargs.command(
          setTimeout(checkHandShake, 100);
       } else {
         sendGetRequest(client,myUrl)
+      }
+  }
+  checkHandShake(handshakeComplete)
+  }
+);
+
+// POST UDP function 
+yargs.command(
+  "udp_Post [url]",
+  "Sends a Get request to a server across a Router",
+  (yargs) => {},
+  function handler(argv) {
+    console.log("Welcome to GET Function!");
+
+    // creating a client socket
+    var client = udp.createSocket("udp4");
+    // client socket bind
+    client.bind(5050);
+
+    // creating the http request
+    const myUrl = url.parse(argv.url);
+
+    // MAKING HANDSHAKE PACKET TO SEND
+
+    var handshakeComplete = false;
+    var p1 = toPacket("SYN", "1", "127.0.0.1", "8080", "Hi S");
+    var p3 = toPacket(
+      "ACK",
+      "3",
+      "127.0.0.1",
+      "8080",
+      "CONNECTION ESTABLISHED"
+    );
+
+    client.on("message", function (msg, info) {
+      var response = parsePacket(msg, info);
+      if (response.packetType == "SYN-ACK") {
+        client.send(p3, 3001, "localhost", function (error) {
+          if (error) {
+            client.close();
+          } else {
+            console.log("P3 sent !!!");
+          }
+        });
+        handshakeComplete = true;
+      } else if (response.packetType == "data") {
+        console.log("Data Recieved");
+      }
+    });
+
+    client.send(p1, 3001, "localhost", function (error) {
+      if (error) {
+        client.close();
+      } else {
+        console.log("P1 sent !!!");
+      }
+    });
+
+    function checkHandShake(handShake) {
+      if(handShake === false) {
+         setTimeout(checkHandShake, 100);
+      } else {
+        sendPostRequest(client,myUrl,argv)
       }
   }
   checkHandShake(handshakeComplete)

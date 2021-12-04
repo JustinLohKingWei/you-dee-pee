@@ -141,7 +141,7 @@ export function sendGetRequest(client, myUrl) {
 
 // sendPostRequest
 
-export function sendPostRequest(client, myUrl) {
+export function sendPostRequest(client, myUrl,argv) {
   console.log("SENDING POST REQUEST")
   let requestToSend = ""
   requestToSend =

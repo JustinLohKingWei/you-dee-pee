@@ -1,3 +1,0 @@
-[console_scripts]
-udp_httpfs = udp_httpfs.__main__:main
-

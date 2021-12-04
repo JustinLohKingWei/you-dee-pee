@@ -70,7 +70,7 @@ def handlePostRequest(socket,address,request,directoryInput,bodyInput):
             body+="Content appended to end of file.\n"
     else:
         print('File does not exist, creating a file with the specified name')
-        body+="New dile created.\n"
+        body+="New file created.\n"
     f = open(test_Path, "a+")
     f.write(bodyInput)
     f.close()   

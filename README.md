@@ -26,4 +26,9 @@ This Project Comprises of 3 Components used to simulate a UDP connection
 3. Use the command `$ udp_httpfs -p -d to test a GET request`
 4. Use the command `$ udp_httpc udp_Get 'http://127.0.0.1:8080//get?foo.txt' `to test a queried GET request
 5. Use the command `$ udp_httpc udp_Post -h "Content-Type: text/html" --d 'A Post Request' 'http://127.0.0.1:8080/foo.txt' to test a POST request`
+
+# Missing Features
+- [ ] Proper Implementation Of Selective ARQ protocol
+- [ ] Resistance against a data drop rate of 50%
+- [ ] handling of a data delay rate of at least 5 seconds
  

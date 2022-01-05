@@ -1,8 +1,8 @@
 # you-dee-pee
 This Project Comprises of 3 Components used to simulate a UDP connection 
 1. A Router Application (Not my creation), runs on port 3001 on localhost
-2. A Server Application with POST/GET requests handling , runs on port 8080 on local host
-3. A Client Application to send POST , GET requests to the server, runs on port 5050 on local host
+2. A Server Application with POST/GET requests handling , runs on port 8080 on local host. Is a variation of https://github.com/JustinLohKingWei/httpfs
+3. A Client Application to send POST , GET requests to the server, runs on port 5050 on local host. Is a variation of https://github.com/JustinLohKingWei/node-httpc
 
 # Router installation
 1. Have golang installed
